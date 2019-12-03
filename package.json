@@ -1,0 +1,27 @@
+{
+  "name": "exo-chat",
+  "version": "1.0.0",
+  "description": "chat simple",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ithaqua974/exo-chat.git"
+  },
+  "author": "tristan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ithaqua974/exo-chat/issues"
+  },
+  "homepage": "https://github.com/ithaqua974/exo-chat#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "mongoose": "^5.7.13",
+    "socket.io": "^2.3.0"
+  }
+}

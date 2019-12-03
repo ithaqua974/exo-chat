@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <br>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="display-4">
+                        Send Message
+                    </h1>
+                </div>
+                <div class="cardbody p-2">
+                    <input id="name" class="form-control" placeholder="Name">
+                    <br>
+                    <textarea id="message" cols="30" rows="10" class="form-control"
+                        placeholder="Your message here"></textarea>
+                    <br>
+                </div>
+                <div class="card-footer">
+                    <button id="send" class="btn btn-success">Send</button>
+                </div>
+            </div>
+            <div class="card" style="height: 500px;">
+                <div class="card-header">
+                    <h1 class="display-4">conversation</h1>
+                </div>
+                <div class="card-body overflow-auto" id="messages">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/socket.io/socket.io.js"> </script>
+    <script>
+        var socket = io();
+        socket.on('message', addMessages)
+        $(() => {
+            getMessage()
+
+            $("#send").click(() => {
+                sendMessage({
+                    name: $("#name").val(),
+                    message: $("#message").val()
+                });
+
+            })
+        })
+
+        function scroll() {
+
+            $("#messages").scrollTop(1000000000);
+
+        }
+
+        function addMessages(message) {
+            $("#messages").append(`
+            <div class="card p-2 shadow m-2">
+            <h5 class=""> ${message.name} dit:</h5>
+                <p>${message.message}</p>
+                </div>`)
+            scroll()
+        }
+
+        function getMessage() {
+            $.get('/messages', (data) => {
+                data.forEach(addMessages);
+            })
+        }
+
+        function sendMessage(message) {
+            $.post('/messages', message)
+        }
+    </script>
+</body>
+
+</html>
